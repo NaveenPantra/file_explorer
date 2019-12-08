@@ -1,0 +1,5 @@
+export const ACTIONS = {
+  PUSH_PATH: "PUSH_PATH",
+  POP_PATH: "POP_PATH",
+  REPLACE_PATH: "REPLACE_PATH"
+};
