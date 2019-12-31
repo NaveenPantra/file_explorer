@@ -40,13 +40,15 @@ const styles = {
 const TreeNode = ({ classes, content = {}, info, depth, replacePath }) => {
   const [isTreeOpen, setisTreeOpen] = useState(false);
   const handleClick = () => {
+    // debugger;
     setisTreeOpen(!isTreeOpen);
     if (
-      Object.keys(content).length === 0 &&
+      // Object.keys(content).length === 0
+      content.children.length === 0 &&
       (!isTreeOpen || info.type !== FOLDER)
     ) {
       let { path } = info;
-      path = path.split("/");
+      // path = path.split("/");
       replacePath(path);
     }
   };
@@ -80,7 +82,8 @@ const TreeNode = ({ classes, content = {}, info, depth, replacePath }) => {
         ) : null}
       </div>
       {info.type === FOLDER && isTreeOpen ? (
-        <Tree content={content} depth={depth + 1} />
+        //<Tree content={content} depth={depth + 1} />
+        <Tree content={content.children} depth={depth + 1} />
       ) : null}
     </>
   );

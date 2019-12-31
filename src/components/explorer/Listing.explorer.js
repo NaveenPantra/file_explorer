@@ -35,17 +35,22 @@ const styles = {
   }
 };
 
-const ExplorerListing = ({ classes, explorer }) => {
+const ExplorerListing = ({ classes, explorer, searchData, currentPath }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // contents of the current folder
-  const contents = { ...explorer.content };
-  const listContents = Object.keys(contents).map(content => (
-    <ThumbnailExplorer key={content} info={contents[content].info} />
+  // const contents = { ...explorer.content };
+  const { children } = searchData[currentPath.join("/")];
+  // const listContents = Object.keys(contents).map(content => (
+  //   <ThumbnailExplorer key={content} info={contents[content].info} />
+  // ));
+  const listChildren = children.map(child => (
+    <ThumbnailExplorer key={"child"} info={searchData[child]} />
   ));
   return (
     <>
       <section className={classes.root}>
-        {listContents}
+        {/* {listContents} */}
+        {listChildren}
         <figure className={classes.figure} onClick={() => setIsModalOpen(true)}>
           <img src={AddImage} alt={"Add File/Folder"} />
         </figure>
@@ -53,7 +58,7 @@ const ExplorerListing = ({ classes, explorer }) => {
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(!isModalOpen)}>
         <FileFolderAddForm
           onClose={() => setIsModalOpen(!isModalOpen)}
-          contents={Object.keys(contents)}
+          contents={children}
         />
       </Modal>
     </>
@@ -61,12 +66,13 @@ const ExplorerListing = ({ classes, explorer }) => {
 };
 
 const mapStateToProps = state => {
-  let { currentPath, explorer } = state;
-  explorer = { ...explorer };
-  explorer = getContentsForCurrentPath(currentPath, explorer);
+  let { currentPath, explorer, searchData } = state;
+  // explorer = { ...explorer };
+  // explorer = getContentsForCurrentPath(currentPath, explorer);
   return {
     currentPath,
-    explorer
+    // explorer,
+    searchData
   };
 };
 

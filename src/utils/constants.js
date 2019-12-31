@@ -28,3 +28,5 @@ export const MONTHS_ARRAY = [
   "November",
   "December"
 ];
+
+export const FALSY_VALUES = [undefined, null];

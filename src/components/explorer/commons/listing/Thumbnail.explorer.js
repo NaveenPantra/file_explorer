@@ -215,13 +215,14 @@ const getContentOptions = (
       name: "Delete",
       actionType: "danger",
       handler: () => {
-        deleteObject({ path: currentPath, name: info.name });
+        // deleteObject({ path: currentPath, name: info.name });
         const path = `${currentPath.join("/")}/${name}`;
         deleteSearchObject({
           fullPath: path,
           name: info.name,
           type: info.type
         });
+        setIsContextMenuOpen(!isContextMenuOpen);
       }
     }
   };

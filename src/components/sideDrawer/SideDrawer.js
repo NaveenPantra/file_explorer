@@ -23,17 +23,27 @@ const styles = {
   }
 };
 
-const SideDrawer = ({ classes, explorer = {}, replacePath }) => {
-  const {
-    root: { content = {} }
-  } = explorer;
+const SideDrawer = ({ classes, explorer = {}, replacePath, searchData }) => {
+  // const {
+  //   root: { content = {} }
+  // } = explorer;
+  // debugger;
+  const searchRootChildren = searchData.root.children;
 
   // The Tree view contain TreeNodes which contain Tree
-  const treeNodes = Object.keys(content).map(name => (
+  // const treeNodes = Object.keys(content).map(name => (
+  //   <TreeNode
+  //     key={name}
+  //     content={content[name].content}
+  //     info={content[name].info}
+  //     depth={0}
+  //   />
+  // ));
+  const searchTreeNodes = searchRootChildren.map(child => (
     <TreeNode
-      key={name}
-      content={content[name].content}
-      info={content[name].info}
+      key={child}
+      content={searchData[child]}
+      info={searchData[child]}
       depth={0}
     />
   ));
@@ -48,12 +58,18 @@ const SideDrawer = ({ classes, explorer = {}, replacePath }) => {
       <h3 className={classes.steathHeader} onClick={handleClick}>
         Root
       </h3>
-      <div>{treeNodes}</div>
+      <div>
+        {/* {treeNodes} */}
+        {searchTreeNodes}
+      </div>
     </section>
   );
 };
 
-const mapStateTopProps = ({ explorer }) => ({ explorer });
+const mapStateTopProps = ({ explorer, searchData }) => ({
+  // explorer,
+  searchData
+});
 
 const mapDispatchToProps = dispatch => ({
   replacePath: payload => dispatch(replacePath(payload))

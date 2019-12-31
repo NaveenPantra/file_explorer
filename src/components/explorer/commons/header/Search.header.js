@@ -74,7 +74,12 @@ class SearchHeader extends Component {
   };
 
   handleSearch = () => {
-    this.setState({ openSearchResults: true });
+    setTimeout(() => {
+      this.setState({ openSearchResults: true });
+    }, 100);
+    console.log("handleSearch");
+    // this.setState({ openSearchResults: true });
+    // debugger;
     // this is called when input fild get foucs
     // So when one delete create new fiels
     // they will reflect ihe search immidiatly
@@ -83,11 +88,11 @@ class SearchHeader extends Component {
     // only when the term is not searched
     const timeOutID = setInterval(() => {
       const { prevSearchInput, searchInput, prevSearchTerm } = this.state;
-      if ([prevSearchTerm, prevSearchInput, ""].indexOf(searchInput) > -1)
-        return null;
+      if ([prevSearchTerm, ""].indexOf(searchInput) > -1) return null;
+      console.log(`Searching: ${searchInput}`);
       this.handleGetContent();
       this.setState({ prevSearchTerm: searchInput });
-    }, 600);
+    }, 700);
     // to clear the timmeOut on blue and unmounting
     this.setState({ timeOutID });
   };
@@ -106,6 +111,7 @@ class SearchHeader extends Component {
   };
 
   handleOnBlur = () => {
+    console.log("On Blur");
     const { timeOutID } = this.state;
     clearInterval(timeOutID);
   };
@@ -116,6 +122,7 @@ class SearchHeader extends Component {
   }
 
   handleToggleSearchResults = () => {
+    // debugger;
     this.setState(prevState => ({
       openSearchResults: !prevState.openSearchResults
     }));
@@ -162,6 +169,7 @@ class SearchHeader extends Component {
             onChange={this.handleOnChange}
             onFocus={this.handleSearch}
             onBlur={this.handleOnBlur}
+            onClick={this.handleToggleSearchResults}
             placeholder={"Search for anything"}
             className={classes.input}
           />

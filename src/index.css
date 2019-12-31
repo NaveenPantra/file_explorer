@@ -40,7 +40,8 @@
 
 html {
   font-size: 62.5%; /* 62.5% is 10px (i.e 62.5% of 16px is 10px) now 1rem = 10px usefull in responsive design */
-  background: var(--color-midnight-blue);
+  /* background: var(--color-midnight-blue); */
+  background: var(--color-context-menu-option-bck);
   position: relative;
 }
 
@@ -57,7 +58,7 @@ body {
   margin-top: 10rem;
   overflow: scroll;
   border-radius: 3px;
-  box-shadow: var(--shadow-light);
+  box-shadow: var(--shadow-dark);
 }
 
 #root {

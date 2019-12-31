@@ -124,7 +124,8 @@ class FileFolderAddForm extends Component {
     } = this.state;
     // validating checks
     nameError = type === FILE ? validateFileName(name) : validateName(name);
-    nameError = nameError || checkForValidObject(contents, name);
+    nameError =
+      nameError || checkForValidObject(contents, `${currentPath}/${name}`);
     sizeError = validateNumber(size);
     creatorNameError = validateName(creatorName);
     createdDateError = createdDate.length === 0 || validateDate(createdDate);
@@ -139,25 +140,29 @@ class FileFolderAddForm extends Component {
         },
         () => {
           // add the object to search and explorer state and close it.
-          createObject({
-            path: currentPath,
-            name,
-            info: {
-              name,
-              size: `${size}Kb`,
-              type,
-              "creator name": creatorName,
-              "created date": getFormatedCreatedDate(createdDate),
-              path: currentPath.join("/")
-            },
-            content: {}
-          });
+          // createObject({
+          //   path: currentPath,
+          //   name,
+          //   info: {
+          //     name,
+          //     size: `${size}Kb`,
+          //     type,
+          //     "creator name": creatorName,
+          //     "created date": getFormatedCreatedDate(createdDate),
+          //     path: currentPath.join("/")
+          //   },
+          //   content: {}
+          // });
           const fullPath = `${currentPath.join("/")}/${name}`;
           if (type === FOLDER) currentPath.push(name);
           const info = {
             type,
             name,
-            path: currentPath
+            size: `${size}Kb`,
+            "creator name": creatorName,
+            "created date": getFormatedCreatedDate(createdDate),
+            path: currentPath,
+            children: []
           };
           addSearchObject({ fullPath, info });
           onClose();

@@ -1,6 +1,7 @@
 import React from "react";
 import withStyles from "react-jss";
 import TreeNode from "./TreeNode";
+import { connect } from "react-redux";
 
 const styles = {
   root: {
@@ -15,10 +16,13 @@ const styles = {
   }
 };
 
-const Tree = ({ classes, content = {}, depth }) => {
-  const contentLength = Object.keys(content).length;
+const Tree = ({ classes, content = {}, depth, searchData }) => {
+  // const contentLength = Object.keys(content).length;
   // if there are contents return messsage
-  if (contentLength === 0) {
+  if (
+    // contentLength === 0
+    content.length === 0
+  ) {
     return (
       <div className={classes.emptyMsg} style={{ marginLeft: 10 * depth }}>
         Empty Folder, &nbsp;&nbsp;Add Files/Folders on Right Side
@@ -34,7 +38,24 @@ const Tree = ({ classes, content = {}, depth }) => {
       depth={depth}
     />
   ));
-  return <div className={classes.root}>{treeNodes}</div>;
+  const searchTreeNodes = content.map(child => (
+    <TreeNode
+      key={child}
+      content={searchData[child]}
+      info={searchData[child]}
+      depth={depth}
+    />
+  ));
+  return (
+    <div className={classes.root}>
+      {/* {treeNodes} */}
+      {searchTreeNodes}
+    </div>
+  );
 };
 
-export default withStyles(styles)(Tree);
+const mapStateToProps = ({ searchData }) => ({
+  searchData
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(Tree));

@@ -12,7 +12,8 @@ const styles = {
     borderRadius: 8,
     width: "14rem",
     zIndex: 1,
-    background: "var(--color-modal-background)"
+    background: "var(--color-modal-background)",
+    overflow: "hidden"
   }
 };
 
